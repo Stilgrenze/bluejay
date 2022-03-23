@@ -64,7 +64,7 @@ class Peripheral: NSObject {
     }
 
     /// Queue the necessary operations needed to discover the specified characteristic.
-    private func discoverCharactersitic(_ characteristicIdentifier: CharacteristicIdentifier, callback: @escaping (DiscoveryResult) -> Void) {
+    public func discoverCharactersitic(_ characteristicIdentifier: CharacteristicIdentifier, callback: @escaping (DiscoveryResult) -> Void) {
         var discoverServiceFailed = false
 
         addOperation(DiscoverService(
@@ -109,6 +109,7 @@ class Peripheral: NSObject {
         cbPeripheral.readRSSI()
     }
 
+    
     /// Read from a specified characteristic.
     public func read<R: Receivable>(from characteristicIdentifier: CharacteristicIdentifier, completion: @escaping (ReadResult<R>) -> Void) {
         precondition(
