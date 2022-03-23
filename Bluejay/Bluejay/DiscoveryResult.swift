@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DiscoveryResult {
+public enum DiscoveryResult {
     case success
     case failure(Error)
 }

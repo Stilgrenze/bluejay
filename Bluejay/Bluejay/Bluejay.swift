@@ -611,6 +611,23 @@ public class Bluejay: NSObject { //swiftlint:disable:this type_body_length
 
     // MARK: - Actions
 
+    
+    public func discoverCharactersitic(_ characteristicIdentifier: CharacteristicIdentifier, callback: @escaping (DiscoveryResult) -> Void) {
+        Dispatch.dispatchPrecondition(condition: .onQueue(.main))
+        
+        if isRunningBackgroundTask {
+            callback(.failure(BluejayError.backgroundTaskRunning))
+            return
+        }
+
+        if let peripheral = connectedPeripheral {
+            peripheral.discoverCharactersitic(characteristicIdentifier, callback: callback)
+        } else {
+            debugLog("Cannot request read on \(characteristicIdentifier.description): \(BluejayError.notConnected.localizedDescription)")
+            callback(.failure(BluejayError.notConnected))
+        }
+    }
+    
     /**
      Read from the specified characteristic.
 
